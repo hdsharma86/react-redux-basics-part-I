@@ -1,4 +1,5 @@
-import * as actionTypes from '../actions';
+import * as actionTypes from '../actions/actionTypes';
+import {updateObject} from '../util';
 
 const initialState = {
     counter: 0,
@@ -9,20 +10,11 @@ const reducer = (state = initialState, action) => {
     switch(action.type){
         
         case(actionTypes.STORE_RESULT):
-            return {
-                ...state,
-                result: state.result.concat({id: new Date().getTime(), value: action.counter})
-            };
+            return updateObject(state, {result: state.result.concat({id: new Date().getTime(), value: action.counter})});
 
         case (actionTypes.DELETE_RESULT):
-            /*const updatedArr = [...state.result];
-            updatedArr.splice(id, 1);*/
-
-            const updatedResult = state.result.filter(result => result.id !== action.resultId);
-            return {
-                ...state,
-                result: updatedResult
-            };
+            const updatedResult = state.result.filter(result => result.id !== action.resultId);    
+            return updateObject(state, {result: updatedResult});
     }
     return state;
 }
